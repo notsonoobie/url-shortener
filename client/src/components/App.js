@@ -25,7 +25,7 @@ function App() {
     setErrMsg(undefined)
     setDone(false)
     e.preventDefault()
-    let response = await fetch('http://localhost:5000/url', {
+    let response = await fetch('/url', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
