@@ -6,8 +6,11 @@ const morgan = require('morgan') // Logging Request
 const yup = require('yup') // Schema Validations
 const { nanoid } = require('nanoid')
 
-// require('dotenv').config()
-// const db = require('./db/db')() // DB CONNECTION
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').config()
+}
+
+const db = require('./db/db')() // DB CONNECTION
 
 const URL_MODEL = require('./schema/URLSchema')
 const app = express()
@@ -19,8 +22,6 @@ app.use(cors())
 
 app.use(helmet())
 app.use(morgan('common')) // Logging API Calls
-
-// app.use(express.static(path.join(__dirname,'client','build'))) // Middleware for serving static assets
 
 const schema = yup.string().trim().url().required()
 
@@ -37,8 +38,6 @@ app.get('/:id', async (req,res, next) => {
     })
 
     if(!urlInMongo){
-      // e = new Error('Slug is Invalid')
-      // next(e)
       return res.redirect(`${req.protocol}://${req.headers.host}`)
     }
 
@@ -109,10 +108,6 @@ app.use((error, req, res, next) => {
     issue: error
   })
 })
-
-// app.get('*', (req,res) => {
-//   res.sendFile(path.join(__dirname,'client','build','index.html')) // For CRA
-// })
 
 app.listen(PORT, () => {
   console.log(`Server up and running at Port ${PORT}`)
