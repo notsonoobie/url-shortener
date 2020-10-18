@@ -5,8 +5,8 @@ const cors = require('cors')
 const morgan = require('morgan') // Logging Request
 const yup = require('yup') // Schema Validations
 const { nanoid } = require('nanoid')
-require('dotenv').config()
-const db = require('./db/db')() // DB CONNECTION
+// require('dotenv').config()
+// const db = require('./db/db')() // DB CONNECTION
 const URL_MODEL = require('./schema/URLSchema')
 const app = express()
 const PORT = process.env.PORT || 5000
