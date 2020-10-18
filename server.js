@@ -18,7 +18,7 @@ app.use(cors())
 app.use(helmet())
 app.use(morgan('common')) // Logging API Calls
 
-app.use(express.static('client/build')) // Middleware for serving static assets
+app.use(express.static(path.join(__dirname,'client','build'))) // Middleware for serving static assets
 
 const schema = yup.string().trim().url().required()
 
@@ -102,7 +102,7 @@ app.use((error, req, res, next) => {
 })
 
 app.get('*', (req,res) => {
-  res.sendFile(path.resolve(__dirname,'client','client','index.html')) // For CRA
+  res.sendFile(path.join(__dirname,'client','build','index.html')) // For CRA
 })
 
 app.listen(PORT, (err) => {
