@@ -5,8 +5,10 @@ const cors = require('cors')
 const morgan = require('morgan') // Logging Request
 const yup = require('yup') // Schema Validations
 const { nanoid } = require('nanoid')
+
 // require('dotenv').config()
 // const db = require('./db/db')() // DB CONNECTION
+
 const URL_MODEL = require('./schema/URLSchema')
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -18,7 +20,7 @@ app.use(cors())
 app.use(helmet())
 app.use(morgan('common')) // Logging API Calls
 
-app.use(express.static(path.join(__dirname,'client','build'))) // Middleware for serving static assets
+// app.use(express.static(path.join(__dirname,'client','build'))) // Middleware for serving static assets
 
 const schema = yup.string().trim().url().required()
 
@@ -94,6 +96,13 @@ app.post('/url', async (req,res, next) => {
 
 })
 
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'))
+  app.get('*', (req,res) => {
+      res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+  })
+}
+
 app.use((error, req, res, next) => {
   res.status(422).json({
     message: error.message,
@@ -101,11 +110,10 @@ app.use((error, req, res, next) => {
   })
 })
 
-app.get('*', (req,res) => {
-  res.sendFile(path.join(__dirname,'client','build','index.html')) // For CRA
-})
+// app.get('*', (req,res) => {
+//   res.sendFile(path.join(__dirname,'client','build','index.html')) // For CRA
+// })
 
-app.listen(PORT, (err) => {
-  if(err) return console.log('Error occured while starting the App')
+app.listen(PORT, () => {
   console.log(`Server up and running at Port ${PORT}`)
 })
