@@ -1,2 +1,2 @@
 # url-shortener
-URL Shortener designed with Node.JS backed up by MongoDB
+URL Shortener designed with MERN Stack
