@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
-    "test": "npm run build --prefix client && npm run start"
+    "test:local": "npm run build --prefix client && npm run start"
   },
   "repository": {
     "type": "git",
