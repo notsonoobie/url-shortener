@@ -13,10 +13,7 @@ const PORT = process.env.PORT || 5000
 
 app.use(express.json()) // Body Parser Middleware
 
-app.use(cors({
-  origin: "*",
-  optionsSuccessStatus: 200
- }))
+app.use(cors())
 
 app.use(helmet())
 app.use(morgan('common')) // Logging API Calls
